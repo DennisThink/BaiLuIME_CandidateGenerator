@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.0)
+project(BaiLuIME_CandidateGenerator_test1)
+SET(CORE_FILE_DIR ../../source/)
+SET(CORE_SOURCE_FILE ${CORE_FILE_DIR}/SimpleCandidateGenerator.cpp)
+include_directories(${CORE_FILE_DIR})
+SET(SOURCE_FILE ./main.cpp)
+add_executable(test1 ${SOURCE_FILE} ${CORE_SOURCE_FILE})
