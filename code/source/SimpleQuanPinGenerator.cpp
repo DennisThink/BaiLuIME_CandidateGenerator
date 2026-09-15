@@ -84,9 +84,20 @@ void CSimpleQuanPinGenerator::ReadFileToMemory()
     for (wchar_t c : ws) {
         if (c == L'\n') {
             if (!line.empty() && line.back() == L'\r') line.pop_back();
-            std::wcout << line << L'\n';
+            //std::wcout << line << L'\n';
             DictLine dictLine = ConvertToDictLine(line);
-            std::wcout << L"PinYin: " << dictLine._strPinYin << "-------Chinese:" << dictLine._strChinese << std::endl;
+            //std::wcout << L"PinYin: " << dictLine._strPinYin << "-------Chinese:" << dictLine._strChinese << std::endl;
+            auto item = m_simpleDirectory.find(dictLine._strPinYin);
+            if(item != m_simpleDirectory.end())
+            {
+                item->second.push_back(dictLine._strChinese);
+            }
+            else
+            {
+                std::vector<std::wstring> result;
+                result.push_back(dictLine._strChinese);
+                m_simpleDirectory.insert({ dictLine._strPinYin,result });
+            }
             line.clear();
         }
         else {
