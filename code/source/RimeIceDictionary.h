@@ -10,5 +10,10 @@ public:
 	virtual std::vector<DictElem_t> GetAllData() const override;
 	virtual bool AddDictElem(const DictElem_t& elem) override;
 	virtual bool RemoveDictElem(const DictElem_t& elem) override;
+private:
+	void PrintDictElem(const DictElem_t& elem);
+	std::wstring DictElemToString(const DictElem_t& elem);
+	DictElem_t StringToDictElem(const std::wstring& strDict);
+
 };
 #endif
