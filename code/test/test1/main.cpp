@@ -73,6 +73,7 @@ int main(int argc, char* argv[])
         auto end = std::chrono::steady_clock::now();
         std::chrono::duration<double, std::milli> ms = end - start;
         std::wcout << L"Read Time: " << ms.count() << L" ms" << std::endl;
+        dictionary.WriteDataToFile(L"8105_Copy.dict.txt");
     }
     {
         auto start = std::chrono::steady_clock::now();
@@ -81,6 +82,7 @@ int main(int argc, char* argv[])
         auto end = std::chrono::steady_clock::now();
         std::chrono::duration<double, std::milli> ms = end - start;
         std::wcout << L"Read Time: " << ms.count() << L" ms" << std::endl;
+        dictionary.WriteDataToFile(L"base_Copy.dict.txt");
     }
     return 0;
 }

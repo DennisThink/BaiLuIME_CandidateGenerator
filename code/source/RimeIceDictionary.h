@@ -15,5 +15,7 @@ private:
 	std::wstring DictElemToString(const DictElem_t& elem);
 	DictElem_t StringToDictElem(const std::wstring& strDict);
 
+private:
+	std::vector<DictElem_t> m_allDictElem;
 };
 #endif
