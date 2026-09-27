@@ -126,7 +126,9 @@ bool CRimeIceDictionary::ReadDataFromFile(const std::wstring strFileName)
                 line.pop_back();
             }
            
+            //std::wcout.clear();
             //std::wcout << line << std::endl;
+            //std::wcout.clear();
             DictElem_t elem = StringToDictElem(line);
             m_allDictElem.push_back(elem);
             //PrintDictElem(elem);

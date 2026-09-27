@@ -4,7 +4,8 @@ SET(CORE_FILE_DIR ../../source)
 SET(CORE_SOURCE_FILE 
 ${CORE_FILE_DIR}/SimpleCandidateGenerator.cpp 
 ${CORE_FILE_DIR}/SimpleQuanPinGenerator.cpp
-${CORE_FILE_DIR}/RimeIceDictionary.cpp)
+${CORE_FILE_DIR}/RimeIceDictionary.cpp
+${CORE_FILE_DIR}/RimeCandidateGenerator.cpp)
 
 
 include_directories(${CORE_FILE_DIR})
