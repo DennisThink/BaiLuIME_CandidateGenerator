@@ -6,6 +6,7 @@
 #include "SimpleQuanPinGenerator.h"
 #include "RimeIceDictionary.h"
 #include "RimeCandidateGenerator.h"
+#include "LocalTcpGenerator.h"
 int main(int argc, char* argv[])
 {
     std::cout << "test1" << std::endl;
@@ -124,7 +125,45 @@ int main(int argc, char* argv[])
         }
     }
 
+    //Local Tcp Generator
+    {
+        auto start = std::chrono::steady_clock::now();
+        CLocalTcpGenerator generator;
+        auto end = std::chrono::steady_clock::now();
+        std::chrono::duration<double, std::milli> ms = end - start;
+        std::wcout << L"Read Time: " << ms.count() << L" ms" << std::endl;
+        {
+            std::wstring input = L"ni";
+            std::wcout.clear();
+            auto candidates = generator.Generate(input, 5);
+            for (auto& item : candidates)
+            {
+                std::wcout << item << std::endl;
+            }
+            std::flush(std::wcout);
+        }
 
+        {
+            std::wstring input = L"wo";
+            auto candidates = generator.Generate(input, 5);
+            std::wcout.clear();
+            for (auto& item : candidates)
+            {
+                std::wcout << item << std::endl;
+            }
+            std::flush(std::wcout);
+        }
+        {
+            std::wstring input = L"ta";
+            auto candidates = generator.Generate(input, 5);
+            std::wcout.clear();
+            for (auto& item : candidates)
+            {
+                std::wcout << item << std::endl;
+            }
+            std::flush(std::wcout);
+        }
+    }
     {
         int value = 0;
         std::cin >> value;
