@@ -8,16 +8,16 @@ class CSimpleQuanPinGenerator :public CandidateGenerator
 public:
     CSimpleQuanPinGenerator();
 public:
-    virtual std::vector<std::wstring> Generate(
-        const std::wstring& input,
+    virtual std::vector<std::string> Generate(
+        const std::string& input,
         std::size_t maxCandidates) override;
 private:
     struct DictLine{
-        std::wstring _strPinYin;
-        std::wstring _strChinese;
+        std::string _strPinYin;
+        std::string _strChinese;
     };
-    DictLine ConvertToDictLine(const std::wstring strLine);
+    DictLine ConvertToDictLine(const std::string strLine);
     void ReadFileToMemory();
-    std::map<std::wstring, std::vector<std::wstring>> m_simpleDirectory;
+    std::map<std::string, std::vector<std::string>> m_simpleDirectory;
 };
 #endif

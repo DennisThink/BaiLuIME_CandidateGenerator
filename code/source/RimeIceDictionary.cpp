@@ -1,28 +1,29 @@
 #include "RimeIceDictionary.h"
+#include "TextFile.hpp"
 #include <sstream>
 #include <iostream>
 #include <fstream>
 void CRimeIceDictionary::PrintDictElem(const DictElem_t& elem)
 {
-    std::wcout.clear();
-    std::wcout <<L"PrintDictElem Chinese Part: ";
-    std::wcout << elem._strChinese;
-    std::wcout << L" PinYin Part:";
+    std::cout.clear();
+    std::cout <<"PrintDictElem Chinese Part: ";
+    std::cout << elem._strChinese;
+    std::cout << " PinYin Part:";
     for (auto item : elem._strPinYin)
     {
-        std::wcout << item;
-        std::wcout << L" ";
+        std::cout << item;
+        std::cout << L" ";
     }
-    std::wcout << L" Frequency Part:";
-    std::wcout << elem._frequency << std::endl;
+    std::cout << " Frequency Part:";
+    std::cout << elem._frequency << std::endl;
     //std::flush(std::wcout);
     return;
 }
-std::wstring CRimeIceDictionary::DictElemToString(const DictElem_t& elem)
+std::string CRimeIceDictionary::DictElemToString(const DictElem_t& elem)
 {
-    std::wstring strResult;
+    std::string strResult;
     strResult += elem._strChinese;
-    strResult += L":";
+    strResult += ":";
     auto itemStart = elem._strPinYin.begin();
     do
     {
@@ -32,15 +33,15 @@ std::wstring CRimeIceDictionary::DictElemToString(const DictElem_t& elem)
         {
             break;
         }
-        strResult += L"-";
+        strResult += "-";
     } while (itemStart != elem._strPinYin.end());
 
-    strResult += L":";
-    strResult += std::to_wstring(elem._frequency);
+    strResult += ":";
+    strResult += std::to_string(elem._frequency);
     return strResult;
 }
 
-DictElem_t CRimeIceDictionary::StringToDictElem(const std::wstring& strDict)
+DictElem_t CRimeIceDictionary::StringToDictElem(const std::string& strDict)
 {
     DictElem_t resultElem;
     
@@ -52,10 +53,10 @@ DictElem_t CRimeIceDictionary::StringToDictElem(const std::wstring& strDict)
     }
     itemStart++;//Skip ":"
 
-    std::wstring strSinglePinYin;
+    std::string strSinglePinYin;
     while ((itemStart != strDict.end()) && (*itemStart != L':'))
     {
-        if (*itemStart == L'-')
+        if (*itemStart == '-')
         {
             resultElem._strPinYin.push_back(strSinglePinYin);
             strSinglePinYin.clear();
@@ -78,78 +79,19 @@ DictElem_t CRimeIceDictionary::StringToDictElem(const std::wstring& strDict)
     resultElem._frequency = std::stoll(strNumber);
     return resultElem;
 }
-bool CRimeIceDictionary::ReadDataFromFile(const std::wstring strFileName)
+bool CRimeIceDictionary::ReadDataFromFile(const std::string strFileName)
 {
-    // 设置全局 locale 为 UTF-8，以便正确输出宽字符
-    std::locale::global(std::locale(""));
-    std::ifstream ifs(strFileName, std::ios::binary);
-    if (!ifs) 
-    { 
-        std::cerr << "无法打开文件\n"; 
-        return false; 
-    }
-   
-    std::string bytes((std::istreambuf_iterator<char>(ifs)),
-        std::istreambuf_iterator<char>());
-
-    if (bytes.size() >= 2 &&
-        static_cast<unsigned char>(bytes[0]) == 0xFF &&
-        static_cast<unsigned char>(bytes[1]) == 0xFE) {
-        bytes.erase(0, 2);
-    }
-   
-    // 组装 UTF-16 LE 码元
-    std::u16string u16;
-    u16.resize(bytes.size() / 2);
-    for (size_t i = 0; i < u16.size(); ++i) {
-        u16[i] = static_cast<char16_t>(
-            static_cast<unsigned char>(bytes[2 * i]) |
-            (static_cast<unsigned char>(bytes[2 * i + 1]) << 8));
-    }
-   
-    // 转成 wstring 再输出（wchar_t 大小平台相关）
-    std::wstring ws;
-    ws.reserve(u16.size());
-    for (char16_t c : u16) {
-        ws.push_back(static_cast<wchar_t>(c));  // 仅 BMP 字符正确
-    }
-   
-    // 按行输出
-    std::wstring line;
+	enc::TextFile file(strFileName);
     m_allDictElem.clear();
-    for (wchar_t c : ws) {
-        if (c == L'\n') {
-           
-            if (!line.empty() && line.back() == L'\r')
-            {
-               
-                line.pop_back();
-            }
-           
-            //std::wcout.clear();
-            //std::wcout << line << std::endl;
-            //std::wcout.clear();
-            DictElem_t elem = StringToDictElem(line);
-            m_allDictElem.push_back(elem);
-            //PrintDictElem(elem);
-            //std::wcout << L"PinYin: " << dictLine._strPinYin << "-------Chinese:" << dictLine._strChinese << std::endl;
-           
-            line.clear();
-        }
-        else {
-            line.push_back(c);
-        }
+	auto& allLines = file.lines();
+	for(const auto& line : allLines) {
+        DictElem_t elem = StringToDictElem(line);
+        m_allDictElem.push_back(elem);
     }
-
-   
-    if (!line.empty()) {
-        if (line.back() == L'\r') line.pop_back();
-        std::wcout << line << L'\n';
-    }
-	return false;
+	return true;
 }
 
-bool CRimeIceDictionary::WriteDataToFile(const std::wstring strFileName)
+bool CRimeIceDictionary::WriteDataToFile(const std::string strFileName)
 {
     bool bWriteBoom = true;
     bool bLittleEndian = true;
@@ -169,7 +111,7 @@ bool CRimeIceDictionary::WriteDataToFile(const std::wstring strFileName)
     {
         
         {
-            std::wstring text = DictElemToString(dictItem);
+            std::string text = DictElemToString(dictItem);
             // 2. 按指定字节序写每个 UTF-16 code unit
             //    注意：不能直接把 u16string.data() 写出去，
             //    因为 host 的字节序不一定和目标一致（虽然 x86/ARM 都是 LE，但显式处理更安全）

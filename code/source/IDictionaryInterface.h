@@ -4,8 +4,8 @@
 #include <string>
 struct DictElem_t
 {
-	std::wstring _strChinese;
-	std::vector<std::wstring> _strPinYin;
+	std::string _strChinese;
+	std::vector<std::string> _strPinYin;
 	int _frequency;
 };
 
@@ -14,8 +14,8 @@ class IDictionary
 public:
 	IDictionary()=default;
 	virtual ~IDictionary() = default;
-	virtual bool ReadDataFromFile(const std::wstring strFileName) = 0;
-	virtual bool WriteDataToFile(const std::wstring strFileName) = 0;
+	virtual bool ReadDataFromFile(const std::string strFileName) = 0;
+	virtual bool WriteDataToFile(const std::string strFileName) = 0;
 	
 	virtual std::vector<DictElem_t> GetAllData() const = 0;
 	virtual bool AddDictElem(const DictElem_t& elem) = 0;

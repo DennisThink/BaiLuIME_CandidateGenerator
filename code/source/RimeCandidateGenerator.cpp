@@ -10,12 +10,12 @@ CRimeCandiateGenerator::CRimeCandiateGenerator()
     }
     if (g_dictionary != nullptr)
     {
-        g_dictionary->ReadDataFromFile(L"8105.dict.txt");
+        g_dictionary->ReadDataFromFile("8105.dict.txt");
     }
     if (g_dictionary != nullptr)
     {
         auto dictData = g_dictionary->GetAllData();
-        std::wstring strKey;
+        std::string strKey;
         for (auto dictItem : dictData)
         {
             strKey.clear();
@@ -31,7 +31,7 @@ CRimeCandiateGenerator::CRimeCandiateGenerator()
             }
             else
             {
-                std::vector<std::wstring> chineseValue;
+                std::vector<std::string> chineseValue;
                 chineseValue.push_back(dictItem._strChinese);
                 m_simpleDirectory.insert({ strKey,chineseValue });
             }
@@ -46,11 +46,11 @@ CRimeCandiateGenerator::~CRimeCandiateGenerator()
         g_dictionary = nullptr;
     }
 }
-std::vector<std::wstring> CRimeCandiateGenerator::Generate(
-    const std::wstring& input,
+std::vector<std::string> CRimeCandiateGenerator::Generate(
+    const std::string& input,
     std::size_t maxCandidates)
 {
-    std::vector<std::wstring> result;
+    std::vector<std::string> result;
     auto valueItem = m_simpleDirectory.find(input);
     if (valueItem != m_simpleDirectory.end())
     {

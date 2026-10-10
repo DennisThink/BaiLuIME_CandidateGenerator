@@ -2,6 +2,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include <iostream>
 
 void CTcpClient::InitSocket()
 {
@@ -45,7 +46,7 @@ bool CTcpClient::ConnectToServer(const std::string strIp, const int port)
     if (connect(m_socket, reinterpret_cast<sockaddr*>(&serverAddr),
         sizeof(serverAddr)) == SOCKET_ERROR)
     {
-        //std::cerr << "connect() Ê§°Ü, ´íÎóÂë: " << WSAGetLastError() << "\n";
+        std::cout << "connect() Ê§°Ü, ´íÎóÂë: " << WSAGetLastError() << "\n";
         //closesocket(sock);
         //WSACleanup();
 		m_bConnected = false;

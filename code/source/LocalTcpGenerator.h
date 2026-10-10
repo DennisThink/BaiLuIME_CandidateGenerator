@@ -9,8 +9,8 @@ public:
     CLocalTcpGenerator();
 	virtual ~CLocalTcpGenerator();
 public:
-    virtual std::vector<std::wstring> Generate(
-        const std::wstring& input,
+    virtual std::vector<std::string> Generate(
+        const std::string& input,
         std::size_t maxCandidates) override;
 };
 #endif

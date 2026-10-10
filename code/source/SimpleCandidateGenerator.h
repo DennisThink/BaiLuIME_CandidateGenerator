@@ -5,7 +5,7 @@
 class SimpleCandidateGenerator : public CandidateGenerator
 {
 public:
-    std::vector<std::wstring> Generate(
-        const std::wstring& input,
+    std::vector<std::string> Generate(
+        const std::string& input,
         std::size_t maxCandidates)override;
 };

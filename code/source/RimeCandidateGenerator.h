@@ -7,10 +7,10 @@ class CRimeCandiateGenerator :public CandidateGenerator
 public:
     CRimeCandiateGenerator();
     virtual ~CRimeCandiateGenerator();
-    virtual std::vector<std::wstring> Generate(
-        const std::wstring& input,
+    virtual std::vector<std::string> Generate(
+        const std::string& input,
         std::size_t maxCandidates)override;
 private:
-    std::map<std::wstring, std::vector<std::wstring>> m_simpleDirectory;
+    std::map<std::string, std::vector<std::string>> m_simpleDirectory;
 };
 #endif
