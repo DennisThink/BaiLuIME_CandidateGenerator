@@ -8,6 +8,9 @@
 #include "RimeCandidateGenerator.h"
 #include "LocalTcpGenerator.h"
 #include <windows.h>
+#include <memory>
+#include <vector>
+using CandidateGeneratorPtr = std::unique_ptr<CandidateGenerator>;
 int main(int argc, char* argv[])
 {
     std::cout << "test1" << std::endl;
@@ -16,173 +19,47 @@ int main(int argc, char* argv[])
     ::SetConsoleCP(CP_UTF8);         // ÊäÈëÓÃ UTF-8
 #endif
     //std::wcout.imbue(std::locale("chs"));
-    if (1)
+	std::vector<CandidateGeneratorPtr> generators;
     {
+		generators.push_back(std::make_unique<SimpleCandidateGenerator>());
+        generators.push_back(std::make_unique<CSimpleQuanPinGenerator>());
 
         {
-            SimpleCandidateGenerator generator;
-            {
-                std::string input = "ni";
-                auto candidates = generator.Generate(input, 5);
-                for (auto& item : candidates)
-                {
-                    std::cout << item << " " << std::endl;
-                }
-                std::flush(std::wcout);
-            }
-            {
-                std::string input = "wo";
-                auto candidates = generator.Generate(input, 5);
-                for (auto& item : candidates)
-                {
-                    std::cout << item << std::endl;
-                }
-                std::flush(std::wcout);
-            }
-            {
-                std::string input = "ta";
-                auto candidates = generator.Generate(input, 5);
-                for (auto& item : candidates)
-                {
-                    std::cout << item << std::endl;
-                }
-                std::flush(std::wcout);
-            }
+			std::string dictFilePath = "F:\\Github\\BaiLuIME_TestDictionary\\SampleIMESimplifiedQuanPin_SMALL.txt";
+            generators.push_back(std::make_unique<CSimpleQuanPinGenerator>(dictFilePath));
         }
-        {
-            auto start = std::chrono::steady_clock::now();
-            CSimpleQuanPinGenerator generator;
-            auto end = std::chrono::steady_clock::now();
-            std::chrono::duration<double, std::milli> ms = end - start;
-            std::wcout << L"Read Time: " << ms.count() << L" ms" << std::endl;
-            {
-                std::string input = "ni";
-                auto candidates = generator.Generate(input, 5);
-                for (auto& item : candidates)
-                {
-                    std::cout << item << std::endl;
-                }
-                std::flush(std::wcout);
-            }
 
-            {
-                std::string input = "wo";
-                auto candidates = generator.Generate(input, 5);
-                for (auto& item : candidates)
-                {
-                    std::cout << item << std::endl;
-                }
-                std::flush(std::wcout);
-            }
-            {
-                std::string input = "ta";
-                auto candidates = generator.Generate(input, 5);
-                for (auto& item : candidates)
-                {
-                    std::cout << item << std::endl;
-                }
-                std::flush(std::wcout);
-            }
-        }
+        generators.push_back(std::make_unique<CRimeCandiateGenerator>());
         {
-            auto start = std::chrono::steady_clock::now();
-            CRimeIceDictionary dictionary;
-            dictionary.ReadDataFromFile("8105.dict.txt");
-            auto end = std::chrono::steady_clock::now();
-            std::chrono::duration<double, std::milli> ms = end - start;
-            std::wcout << L"Read Time: " << ms.count() << L" ms" << std::endl;
-            dictionary.WriteDataToFile("8105_Copy.dict.txt");
+            std::string dictFilePath = "F:\\Github\\BaiLuIME_TestDictionary\\8105.dict.txt";
+			generators.push_back(std::make_unique<CSimpleQuanPinGenerator>(dictFilePath));
         }
-        {
-            auto start = std::chrono::steady_clock::now();
-            CRimeIceDictionary dictionary;
-            dictionary.ReadDataFromFile("base.dict.txt");
-            auto end = std::chrono::steady_clock::now();
-            std::chrono::duration<double, std::milli> ms = end - start;
-            std::wcout << L"Read Time: " << ms.count() << L" ms" << std::endl;
-            dictionary.WriteDataToFile("base_Copy.dict.txt");
-        }
-        {
-            auto start = std::chrono::steady_clock::now();
-            CRimeCandiateGenerator generator;
-            auto end = std::chrono::steady_clock::now();
-            std::chrono::duration<double, std::milli> ms = end - start;
-            std::wcout << L"Read Time: " << ms.count() << L" ms" << std::endl;
-            {
-                std::string input = "ni";
-                std::wcout.clear();
-                auto candidates = generator.Generate(input, 5);
-                for (auto& item : candidates)
-                {
-                    std::cout << item << std::endl;
-                }
-                std::flush(std::wcout);
-            }
 
-            {
-                std::string input = "wo";
-                auto candidates = generator.Generate(input, 5);
-                std::wcout.clear();
-                for (auto& item : candidates)
-                {
-                    std::cout << item << std::endl;
-                }
-                std::flush(std::wcout);
-            }
-            {
-                std::string input = "ta";
-                auto candidates = generator.Generate(input, 5);
-                std::wcout.clear();
-                for (auto& item : candidates)
-                {
-                    std::cout << item << std::endl;
-                }
-                std::flush(std::wcout);
-            }
+        { 
+            std::string dictFilePath = "F:\\Github\\BaiLuIME_TestDictionary\\base.dict.txt";
+            generators.push_back(std::make_unique<CSimpleQuanPinGenerator>(dictFilePath));   
         }
+		generators.push_back(std::make_unique<CLocalTcpGenerator>());
     }
+	std::vector<std::string> testInputs = { "ni", "hao", "he", "wo", "ta" };
 
-    //Local Tcp Generator
-    if(0)
     {
-
-        auto start = std::chrono::steady_clock::now();
-        CLocalTcpGenerator generator;
-        auto end = std::chrono::steady_clock::now();
-        std::chrono::duration<double, std::milli> ms = end - start;
-        std::wcout << L"Read Time: " << ms.count() << L" ms" << std::endl;
+        for(auto& generatorItem:generators)
         {
-            std::string input = "ni";
-            std::wcout.clear();
-            auto candidates = generator.Generate(input, 5);
-            for (auto& item : candidates)
+            for (auto& input : testInputs)
             {
-                std::cout << item << std::endl;
+                auto candidates = generatorItem->Generate(input, 5);
+                std::cout << "Input: " << input << std::endl;
+                std::cout << "Candidates: ";
+                for (auto& item : candidates)
+                {
+                    std::cout << item << " ";
+                }
+                std::cout << std::endl;
             }
-            std::flush(std::wcout);
-        }
-
-        {
-            std::string input = "wo";
-            auto candidates = generator.Generate(input, 5);
-            std::wcout.clear();
-            for (auto& item : candidates)
-            {
-                std::cout << item << std::endl;
-            }
-            std::flush(std::wcout);
-        }
-        {
-            std::string input = "ta";
-            auto candidates = generator.Generate(input, 5);
-            std::cout.clear();
-            for (auto& item : candidates)
-            {
-                std::cout << item << std::endl;
-            }
-            std::flush(std::cout);
-        }
+		}
     }
+   
     {
         int value = 0;
         std::cin >> value;

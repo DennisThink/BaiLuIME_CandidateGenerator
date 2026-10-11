@@ -3,9 +3,13 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
+CSimpleQuanPinGenerator::CSimpleQuanPinGenerator(const std::string& dictFilePath)
+{
+	ReadFileToMemory(dictFilePath);
+}
 CSimpleQuanPinGenerator::CSimpleQuanPinGenerator()
 {
-    ReadFileToMemory();
+    //ReadFileToMemory();
 }
 CSimpleQuanPinGenerator::DictLine CSimpleQuanPinGenerator::ConvertToDictLine(const std::string strLine)
 {
@@ -44,17 +48,14 @@ CSimpleQuanPinGenerator::DictLine CSimpleQuanPinGenerator::ConvertToDictLine(con
 
     return line;
 }
-void CSimpleQuanPinGenerator::ReadFileToMemory()
+void CSimpleQuanPinGenerator::ReadFileToMemory(const std::string& strFileName)
 {
-    // 设置全局 locale 为 UTF-8，以便正确输出宽字符
-    const std::string filename = "SampleIMESimplifiedQuanPin_SMALL.txt";
-	enc::TextFile file(filename);
+	enc::TextFile file(strFileName);
 
 
 	const auto& lines = file.lines();
 	for (const auto& line : lines) {
         DictLine dictLine = ConvertToDictLine(line);
-        std::cout << "PinYin: " << dictLine._strPinYin << "-------Chinese:" << dictLine._strChinese << std::endl;
         auto item = m_simpleDirectory.find(dictLine._strPinYin);
         if(item != m_simpleDirectory.end())
         {

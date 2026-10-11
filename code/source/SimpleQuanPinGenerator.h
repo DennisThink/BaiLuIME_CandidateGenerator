@@ -6,6 +6,7 @@
 class CSimpleQuanPinGenerator :public CandidateGenerator
 {
 public:
+	CSimpleQuanPinGenerator(const std::string& dictFilePath);
     CSimpleQuanPinGenerator();
 public:
     virtual std::vector<std::string> Generate(
@@ -17,7 +18,7 @@ private:
         std::string _strChinese;
     };
     DictLine ConvertToDictLine(const std::string strLine);
-    void ReadFileToMemory();
+    void ReadFileToMemory(const std::string& strFileName);
     std::map<std::string, std::vector<std::string>> m_simpleDirectory;
 };
 #endif

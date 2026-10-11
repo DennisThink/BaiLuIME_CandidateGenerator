@@ -1,20 +1,15 @@
 #include "RimeCandidateGenerator.h"
 #include "RimeIceDictionary.h"
 #include <memory>
-static std::unique_ptr<CRimeIceDictionary> g_dictionary = nullptr;
-CRimeCandiateGenerator::CRimeCandiateGenerator()
+bool CRimeCandiateGenerator::ReadDataFromFile(const std::string strFileName)
 {
-    if (g_dictionary == nullptr)
+    if (m_pDictionary != nullptr)
     {
-        g_dictionary = std::make_unique<CRimeIceDictionary>();
+        m_pDictionary->ReadDataFromFile(strFileName);
     }
-    if (g_dictionary != nullptr)
+    if (m_pDictionary != nullptr)
     {
-        g_dictionary->ReadDataFromFile("8105.dict.txt");
-    }
-    if (g_dictionary != nullptr)
-    {
-        auto dictData = g_dictionary->GetAllData();
+        auto dictData = m_pDictionary->GetAllData();
         std::string strKey;
         for (auto dictItem : dictData)
         {
@@ -37,14 +32,37 @@ CRimeCandiateGenerator::CRimeCandiateGenerator()
             }
         }
     }
+    return true;
+}
+
+void CRimeCandiateGenerator::InitDictionary()
+{
+    if (m_pDictionary == nullptr)
+    {
+        m_pDictionary = std::make_unique<CRimeIceDictionary>();
+    }
+}
+void CRimeCandiateGenerator::UninitDictionary()
+{
+    if (m_pDictionary != nullptr)
+    {
+        m_pDictionary = nullptr;
+	}
+}
+
+CRimeCandiateGenerator::CRimeCandiateGenerator(const std::string& dictFilePath)
+{
+    InitDictionary();
+    ReadDataFromFile(dictFilePath);
+}
+CRimeCandiateGenerator::CRimeCandiateGenerator()
+{
+    InitDictionary();
 }
 
 CRimeCandiateGenerator::~CRimeCandiateGenerator()
 {
-    if (g_dictionary != nullptr)
-    {
-        g_dictionary = nullptr;
-    }
+    UninitDictionary();
 }
 std::vector<std::string> CRimeCandiateGenerator::Generate(
     const std::string& input,
