@@ -2,6 +2,7 @@
 #include "TcpClient.h"
 #include "CommonMsg.h"
 #include <memory>
+#include <iostream>
 std::unique_ptr<CTcpClient> g_tcpClient = nullptr;
 CLocalTcpGenerator::CLocalTcpGenerator()
 {
@@ -58,7 +59,7 @@ std::vector<std::string> CLocalTcpGenerator::Generate(
 		}
 		{
 
-			std::string strInput(input.begin(), input.end());
+			std::string strInput = input;
 			CandidateGeneratorReqMsg reqMsg(strClientId, strInput);
 			{
 				TransBaseMsg_t transMsg(reqMsg.GetMsgType(), reqMsg.ToString());
@@ -72,17 +73,26 @@ std::vector<std::string> CLocalTcpGenerator::Generate(
 				memset(pData, 0, memoryLength);
 				int readLength = memoryLength;
 				g_tcpClient->ReadData(pData, &readLength);
-				TransBaseMsg_t transMsg(pData);
-				if (transMsg.GetType() == MessageType::CandidateRsp_Type)
+				if(readLength > sizeof(Header))
 				{
-					CandidateGeneratorRspMsg rspMsg;
-					if (rspMsg.FromString(transMsg.to_string()))
+					std::cout << "ReadData failed or connection closed." << std::endl;
+					TransBaseMsg_t transMsg(pData);
+					std::cout << "Received message type: " << static_cast<int>(transMsg.GetType()) << std::endl;
+					std::cout << "Received message size: " << transMsg.GetSize() << std::endl;
+					std::cout << "Received message content: " << transMsg.to_string() << std::endl;
+					if (transMsg.GetType() == MessageType::CandidateRsp_Type)
 					{
-						auto candidateList = rspMsg.GetCandidates();
+						CandidateGeneratorRspMsg rspMsg;
+						if (rspMsg.FromString(transMsg.to_string()))
+						{
+							auto candidateList = rspMsg.GetCandidates();
+							candidates = candidateList;
+						}
 					}
 				}
+				delete[] pData;
 			}
-			delete[] pData;
+
 		}
 	}
 	//

@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
     //std::wcout.imbue(std::locale("chs"));
 	std::vector<CandidateGeneratorPtr> generators;
     {
-		generators.push_back(std::make_unique<SimpleCandidateGenerator>());
+		/*generators.push_back(std::make_unique<SimpleCandidateGenerator>());
         generators.push_back(std::make_unique<CSimpleQuanPinGenerator>());
 
         {
@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
         { 
             std::string dictFilePath = "F:\\Github\\BaiLuIME_TestDictionary\\base.dict.txt";
             generators.push_back(std::make_unique<CSimpleQuanPinGenerator>(dictFilePath));   
-        }
+        }*/
 		generators.push_back(std::make_unique<CLocalTcpGenerator>());
     }
 	std::vector<std::string> testInputs = { "ni", "hao", "he", "wo", "ta" };

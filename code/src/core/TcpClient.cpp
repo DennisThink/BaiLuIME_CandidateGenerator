@@ -165,6 +165,7 @@ bool CTcpClient::ReadData(char* data,int* length)
         DWORD startTick = GetTickCount();
 
         bool bTimeOut = false;
+		*length = 0; // 初始化为 0，表示还没读到数据
         while (total < maxLen)
         {
             // 计算整体剩余超时时间
