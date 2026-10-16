@@ -10,6 +10,7 @@
 #include <windows.h>
 #include <memory>
 #include <vector>
+#include <chrono>
 using CandidateGeneratorPtr = std::unique_ptr<CandidateGenerator>;
 int main(int argc, char* argv[])
 {
@@ -48,8 +49,11 @@ int main(int argc, char* argv[])
         {
             for (auto& input : testInputs)
             {
+                auto startTime = std::chrono::steady_clock::now();
                 auto candidates = generatorItem->Generate(input, 5);
-                std::cout << "Input: " << input << std::endl;
+				auto endTime = std::chrono::steady_clock::now();
+                double nsCount = std::chrono::duration<double, std::nano>(endTime-startTime).count();
+                std::cout << "Input: " << input << "  NeedTime: "<<nsCount<<" ns   "<<nsCount/1000<<  " us "<< nsCount/1000000 <<"ms" << std::endl;
                 std::cout << "Candidates: ";
                 for (auto& item : candidates)
                 {

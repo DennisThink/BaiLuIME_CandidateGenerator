@@ -3,7 +3,7 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <iostream>
-
+#include "CommonMsg.h"
 void CTcpClient::InitSocket()
 {
     WSADATA wsaData;
@@ -245,12 +245,22 @@ bool CTcpClient::ReadData(char* data,int* length)
             }
 
             total += n;
+            if(total >= sizeof(Header))
+            {
+				Header* pHeader = reinterpret_cast<Header*>(data);
+                if (total == pHeader->m_length)
+                {
+					*length = total;
+                    return true;
+                }
+                //return true;    // 已读满，返回
+			}
             //std::cout << "本轮 recv 实际读到 " << n
             //    << " 字节，累计 " << total
             //    << " / " << maxLen << "\n";
         }
     }
-	return false;
+	return true;
 }
 
 void CTcpClient::Close()
