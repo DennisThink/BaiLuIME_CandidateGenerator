@@ -1,6 +1,3 @@
 [submodule "external/BaiLuIME_Common"]
 	path = external/BaiLuIME_Common
 	url = git@github.com:DennisThink/BaiLuIME_Common.git
-[submodule "code/external/BaiLuIME_Common"]
-	path = code/external/BaiLuIME_Common
-	url = git@github.com:DennisThink/BaiLuIME_Common.git
