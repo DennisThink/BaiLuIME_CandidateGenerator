@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
 project(BaiLuIME_CandidateGenerator)
-SET(THIRD_PARTY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty")
+SET(THIRD_PARTY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../external/BaiLuIME_Common/thirdparty/")
+SET(CANDIDATE_GENERATOR_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/include/")
 add_subdirectory(src/test)

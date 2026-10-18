@@ -23,6 +23,11 @@ CLocalTcpGenerator::~CLocalTcpGenerator()
 	CTcpClient::CleanupSocket();
 }
 
+bool CLocalTcpGenerator::IsDataReady() const
+{
+	return true;
+}
+
 std::vector<std::string> CLocalTcpGenerator::Generate(
 	const std::string& input,
 	std::size_t maxCandidates)

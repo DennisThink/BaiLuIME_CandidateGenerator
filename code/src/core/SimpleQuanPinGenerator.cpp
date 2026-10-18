@@ -83,3 +83,8 @@ std::vector<std::string> CSimpleQuanPinGenerator::Generate(
     std::vector<std::string> result;
     return result;
 }
+
+bool CSimpleQuanPinGenerator::IsDataReady() const
+{
+	return !m_simpleDirectory.empty();
+}

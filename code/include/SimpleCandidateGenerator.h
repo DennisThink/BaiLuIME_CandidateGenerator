@@ -5,7 +5,11 @@
 class SimpleCandidateGenerator : public CandidateGenerator
 {
 public:
-    std::vector<std::string> Generate(
+    virtual std::vector<std::string> Generate(
         const std::string& input,
         std::size_t maxCandidates)override;
+    virtual bool IsDataReady() const override
+    {
+        return true;
+	}
 };

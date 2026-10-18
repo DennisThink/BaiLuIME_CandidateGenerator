@@ -11,7 +11,7 @@ ${CORE_FILE_DIR}/RimeIceDictionary.cpp
 ${CORE_FILE_DIR}/RimeCandidateGenerator.cpp
 ${CORE_FILE_DIR}/LocalTcpGenerator.cpp
 ${CORE_FILE_DIR}/TcpClient.cpp
-../../../external/BaiLuIME_Common/thirdparty/json11/json11.cpp
+${THIRD_PARTY_DIR}/json11/json11.cpp
 )
 
 

@@ -64,6 +64,11 @@ CRimeCandiateGenerator::~CRimeCandiateGenerator()
 {
     UninitDictionary();
 }
+
+bool CRimeCandiateGenerator::IsDataReady() const
+{
+    return m_pDictionary != nullptr;
+}
 std::vector<std::string> CRimeCandiateGenerator::Generate(
     const std::string& input,
     std::size_t maxCandidates)
