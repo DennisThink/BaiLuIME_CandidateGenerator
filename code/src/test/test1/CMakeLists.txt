@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(BaiLuIME_CandidateGenerator_test1)
-include_directories(../../../external/BaiLuIME_Common/thirdparty/json11/)
-include_directories(../../../external/BaiLuIME_Common/include/)
+include_directories(${THIRD_PARTY_DIR}/json11/)
+include_directories(${THIRD_PARTY_DIR}/../include/)
 include_directories(../../../include/)
 SET(CORE_FILE_DIR ../../core/)
 SET(CORE_SOURCE_FILE 
@@ -11,6 +11,8 @@ ${CORE_FILE_DIR}/RimeIceDictionary.cpp
 ${CORE_FILE_DIR}/RimeCandidateGenerator.cpp
 ${CORE_FILE_DIR}/LocalTcpGenerator.cpp
 ${CORE_FILE_DIR}/TcpClient.cpp
+${CORE_FILE_DIR}/LevenshteinDistance.cpp
+${CORE_FILE_DIR}/LongestCommonSubstringDistance.cpp
 ${THIRD_PARTY_DIR}/json11/json11.cpp
 )
 

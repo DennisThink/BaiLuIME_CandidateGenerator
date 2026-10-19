@@ -30,20 +30,20 @@ int main(int argc, char* argv[])
             generators.push_back(std::make_unique<CSimpleQuanPinGenerator>(dictFilePath));
         }
 
-        generators.push_back(std::make_unique<CRimeCandiateGenerator>());
+        */
         {
             std::string dictFilePath = "F:\\Github\\BaiLuIME_TestDictionary\\8105.dict.txt";
-			generators.push_back(std::make_unique<CSimpleQuanPinGenerator>(dictFilePath));
+			//generators.push_back(std::make_unique<CRimeCandiateGenerator>(dictFilePath));
         }
 
         { 
             std::string dictFilePath = "F:\\Github\\BaiLuIME_TestDictionary\\base.dict.txt";
-            generators.push_back(std::make_unique<CSimpleQuanPinGenerator>(dictFilePath));   
-        }*/
-		generators.push_back(std::make_unique<CLocalTcpGenerator>());
+            generators.push_back(std::make_unique<CRimeCandiateGenerator>(dictFilePath));
+        }
+		//generators.push_back(std::make_unique<CLocalTcpGenerator>());
     }
-	std::vector<std::string> testInputs = { "ni", "hao", "he", "wo", "ta" };
-
+	//std::vector<std::string> testInputs = { "ni", "hao", "he", "wo", "ta"};
+    std::vector<std::string> testInputs = { "tianya", "taiyang", "ty" };
     {
         for(auto& generatorItem:generators)
         {

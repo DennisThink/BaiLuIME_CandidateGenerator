@@ -11,8 +11,14 @@ ${CORE_FILE_DIR}/RimeIceDictionary.cpp
 ${CORE_FILE_DIR}/RimeCandidateGenerator.cpp
 ${CORE_FILE_DIR}/LocalTcpGenerator.cpp
 ${CORE_FILE_DIR}/TcpClient.cpp
+${CORE_FILE_DIR}/LevenshteinDistance.cpp
+${CORE_FILE_DIR}/LongestCommonSubstringDistance.cpp
 ${THIRD_PARTY_DIR}/json11/json11.cpp
 )
 link_libraries(ws2_32.lib)
-SET(SOURCE_FILE ./main.cpp ./test_QuanPinCandidateGenerator.cpp ./test_RimeCandidateGenerator.cpp ${CORE_SOURCE_FILE})
+SET(SOURCE_FILE ./main.cpp 
+./test_QuanPinCandidateGenerator.cpp 
+./test_RimeCandidateGenerator.cpp 
+./test_LongestCommonSubstringDistance.cpp
+${CORE_SOURCE_FILE})
 add_executable(test3 ${SOURCE_FILE})

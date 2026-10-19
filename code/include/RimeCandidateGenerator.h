@@ -4,6 +4,9 @@
 #include "IDictionaryInterface.h"
 #include <memory>
 #include <map>
+using CandidateValue = std::vector<std::string>;
+using CandidateKey = std::string;
+using CandidateMap = std::map < CandidateKey, CandidateValue>;
 class CRimeCandiateGenerator :public CandidateGenerator
 {
 public:
@@ -19,6 +22,7 @@ private:
 	void UninitDictionary();
 	bool ReadDataFromFile(const std::string strFileName);
     std::unique_ptr<IDictionary> m_pDictionary;
+    std::vector<CandidateMap> m_CandidateMaps;
     std::map<std::string, std::vector<std::string>> m_simpleDirectory;
 };
 #endif
