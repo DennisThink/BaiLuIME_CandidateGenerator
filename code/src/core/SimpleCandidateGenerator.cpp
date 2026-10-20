@@ -1,17 +1,17 @@
 ﻿#include "SimpleCandidateGenerator.h"
 
-std::vector<std::string> SimpleCandidateGenerator::Generate(
+CandidateArray SimpleCandidateGenerator::Generate(
     const std::string& input,
     std::size_t maxCandidates)
 {
-    std::vector<std::string> candidates;
+    CandidateArray candidates;
 
     if (maxCandidates == 0)
     {
         return candidates;
     }
 
-    if (input == "ni")
+    /*if (input == "ni")
     {
         candidates.push_back("你");
         candidates.push_back("呢");
@@ -37,7 +37,7 @@ std::vector<std::string> SimpleCandidateGenerator::Generate(
     if (candidates.size() > maxCandidates)
     {
         candidates.resize(maxCandidates);
-    }
+    }*/
 
     return candidates;
 }

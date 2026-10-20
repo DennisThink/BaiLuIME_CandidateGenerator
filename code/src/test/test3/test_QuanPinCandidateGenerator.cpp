@@ -16,7 +16,7 @@ TEST_CASE("SimpleGenerate/SimpleQuanPinGenerator") {
 		CSimpleQuanPinGenerator generator(strFilePath);
 		CHECK(generator.IsDataReady() == true);
 		std::string strUserInput = "ni";
-		std::vector<std::string> result = generator.Generate(strUserInput, 5);
+		auto result = generator.Generate(strUserInput, 5);
 		CHECK(result.size() >= 5);
 	}
 }

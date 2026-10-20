@@ -99,29 +99,12 @@ bool CRimeCandiateGenerator::IsDataReady() const
 {
     return m_pDictionary != nullptr;
 }
-std::vector<std::string> CRimeCandiateGenerator::Generate(
+
+CandidateArray CRimeCandiateGenerator::Generate(
     const std::string& input,
     std::size_t maxCandidates)
 {
-    std::vector<std::string> result;
-    /*auto valueItem = m_simpleDirectory.find(input);
-    if (valueItem != m_simpleDirectory.end())
-    {
-        std::size_t i = 0;
-        for (auto chineseItem : valueItem->second)
-        {
-            if (i < maxCandidates)
-            {
-                result.push_back(chineseItem);
-                i++;
-            }
-            else
-            {
-                break;
-            }
-        }
-    }*/
-
+    CandidateArray result;
     std::size_t INPUT_LEN = input.length();
     if (m_CandidateMaps.size() > INPUT_LEN)
     {
@@ -129,7 +112,13 @@ std::vector<std::string> CRimeCandiateGenerator::Generate(
         auto item = curMap.find(input);
         if (item != curMap.end())
         {
-            result = item->second;
+            for (auto& chineseItem : item->second)
+            {
+                CandidateElem elem;
+                elem.m_nWeight = 100;
+                elem.m_strChinese = chineseItem;
+                result.push_back(elem);
+            }
         }
     }
 
@@ -153,11 +142,25 @@ std::vector<std::string> CRimeCandiateGenerator::Generate(
                         if (curDistance > distance)
                         {
                             distance = curDistance;
-                            result = item.second;
+                            result.clear();
+                            for (auto& chineseItem : item.second)
+                            {
+                                CandidateElem elem;
+                                elem.m_nWeight = curDistance;
+                                elem.m_strChinese = chineseItem;
+                                result.push_back(elem);
+                            }
                         }
                         else if (curDistance == distance)
                         {
-                            result.insert(result.end(), item.second.begin(), item.second.end());
+                            //result.insert(result.end(), item.second.begin(), item.second.end());
+                            for (auto& chineseItem : item.second)
+                            {
+                                CandidateElem elem;
+                                elem.m_nWeight = curDistance;
+                                elem.m_strChinese = chineseItem;
+                                result.push_back(elem);
+                            }
                         }
                     }
                 }

@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
         */
         {
             std::string dictFilePath = "F:\\Github\\BaiLuIME_TestDictionary\\8105.dict.txt";
-			//generators.push_back(std::make_unique<CRimeCandiateGenerator>(dictFilePath));
+			generators.push_back(std::make_unique<CRimeCandiateGenerator>(dictFilePath));
         }
 
         { 
@@ -50,14 +50,14 @@ int main(int argc, char* argv[])
             for (auto& input : testInputs)
             {
                 auto startTime = std::chrono::steady_clock::now();
-                auto candidates = generatorItem->Generate(input, 5);
+                auto candidates = generatorItem->Generate(input, 100);
 				auto endTime = std::chrono::steady_clock::now();
                 double nsCount = std::chrono::duration<double, std::nano>(endTime-startTime).count();
                 std::cout << "Input: " << input << "  NeedTime: "<<nsCount<<" ns   "<<nsCount/1000<<  " us "<< nsCount/1000000 <<"ms" << std::endl;
                 std::cout << "Candidates: ";
                 for (auto& item : candidates)
                 {
-                    std::cout << item << " ";
+                    std::cout << item.m_nWeight <<"  "<<item.m_strChinese << " ";
                 }
                 std::cout << std::endl;
             }

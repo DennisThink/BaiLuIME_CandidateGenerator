@@ -9,7 +9,7 @@ public:
 	CSimpleQuanPinGenerator(const std::string& dictFilePath);
     CSimpleQuanPinGenerator();
 public:
-    virtual std::vector<std::string> Generate(
+    virtual CandidateArray Generate(
         const std::string& input,
         std::size_t maxCandidates) override;
     virtual bool IsDataReady() const override;

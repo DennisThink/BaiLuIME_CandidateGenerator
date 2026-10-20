@@ -28,11 +28,11 @@ bool CLocalTcpGenerator::IsDataReady() const
 	return true;
 }
 
-std::vector<std::string> CLocalTcpGenerator::Generate(
+CandidateArray CLocalTcpGenerator::Generate(
 	const std::string& input,
 	std::size_t maxCandidates)
 {
-	std::vector<std::string> candidates;
+	CandidateArray candidates;
 	if(g_tcpClient != nullptr)
 	{
 		std::string strClientId = "test";
@@ -91,7 +91,14 @@ std::vector<std::string> CLocalTcpGenerator::Generate(
 						if (rspMsg.FromString(transMsg.to_string()))
 						{
 							auto candidateList = rspMsg.GetCandidates();
-							candidates = candidateList;
+							for (auto& item : candidateList)
+							{
+								CandidateElem elem;
+								elem.m_nWeight = item.m_nWeight;
+								elem.m_strChinese = item.m_strChinese;
+								candidates.push_back(elem);
+								//candidates.push_back(item.m_strChinese);
+							}
 						}
 					}
 				}

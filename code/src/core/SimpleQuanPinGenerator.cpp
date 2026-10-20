@@ -70,17 +70,18 @@ void CSimpleQuanPinGenerator::ReadFileToMemory(const std::string& strFileName)
     }
 }
 
-std::vector<std::string> CSimpleQuanPinGenerator::Generate(
+CandidateArray CSimpleQuanPinGenerator::Generate(
     const std::string& input,
     std::size_t maxCandidates)
 {
+    CandidateArray result;
     auto item = m_simpleDirectory.find(input);
     if (item != m_simpleDirectory.end())
     {
-        return item->second;
+        //return item->second;
     }
 
-    std::vector<std::string> result;
+    //std::vector<std::string> result;
     return result;
 }
 
