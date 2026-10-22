@@ -13,6 +13,7 @@ ${CORE_FILE_DIR}/LocalTcpGenerator.cpp
 ${CORE_FILE_DIR}/TcpClient.cpp
 ${CORE_FILE_DIR}/LevenshteinDistance.cpp
 ${CORE_FILE_DIR}/LongestCommonSubstringDistance.cpp
+${CORE_FILE_DIR}/PinYinTable.cpp
 ${THIRD_PARTY_DIR}/json11/json11.cpp
 )
 

@@ -118,6 +118,10 @@ CandidateArray CRimeCandiateGenerator::Generate(
                 elem.m_nWeight = 100;
                 elem.m_strChinese = chineseItem;
                 result.push_back(elem);
+                if (result.size() >= maxCandidates)
+                {
+                    goto END;
+                }
             }
         }
     }
@@ -149,6 +153,10 @@ CandidateArray CRimeCandiateGenerator::Generate(
                                 elem.m_nWeight = curDistance;
                                 elem.m_strChinese = chineseItem;
                                 result.push_back(elem);
+                                if (result.size() >= maxCandidates)
+                                {
+                                    goto END;
+                                }
                             }
                         }
                         else if (curDistance == distance)
@@ -160,6 +168,12 @@ CandidateArray CRimeCandiateGenerator::Generate(
                                 elem.m_nWeight = curDistance;
                                 elem.m_strChinese = chineseItem;
                                 result.push_back(elem);
+                                {
+                                    if (result.size() >= maxCandidates)
+                                    {
+                                        goto END;
+                                    }
+                                }
                             }
                         }
                     }
@@ -167,5 +181,6 @@ CandidateArray CRimeCandiateGenerator::Generate(
             }
         }
     }
+    END:
     return result;
 }

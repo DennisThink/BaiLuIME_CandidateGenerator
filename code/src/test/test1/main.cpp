@@ -49,17 +49,20 @@ int main(int argc, char* argv[])
         {
             for (auto& input : testInputs)
             {
-                auto startTime = std::chrono::steady_clock::now();
-                auto candidates = generatorItem->Generate(input, 100);
-				auto endTime = std::chrono::steady_clock::now();
-                double nsCount = std::chrono::duration<double, std::nano>(endTime-startTime).count();
-                std::cout << "Input: " << input << "  NeedTime: "<<nsCount<<" ns   "<<nsCount/1000<<  " us "<< nsCount/1000000 <<"ms" << std::endl;
-                std::cout << "Candidates: ";
-                for (auto& item : candidates)
+                for (int count = 10; count < 100; count += 10)
                 {
-                    std::cout << item.m_nWeight <<"  "<<item.m_strChinese << " ";
+                    auto startTime = std::chrono::steady_clock::now();
+                    auto candidates = generatorItem->Generate(input, count);
+                    auto endTime = std::chrono::steady_clock::now();
+                    double nsCount = std::chrono::duration<double, std::nano>(endTime - startTime).count();
+                    std::cout << "Input: " << input <<" Count: "<< count << "  NeedTime: " << nsCount << " ns   " << nsCount / 1000 << " us " << nsCount / 1000000 << "ms" << std::endl;
+                    std::cout << "Candidates: ";
+                    for (auto& item : candidates)
+                    {
+                        std::cout << item.m_nWeight << "  " << item.m_strChinese << " ";
+                    }
+                    std::cout << std::endl;
                 }
-                std::cout << std::endl;
             }
 		}
     }
