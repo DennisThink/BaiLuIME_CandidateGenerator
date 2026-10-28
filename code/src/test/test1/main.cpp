@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
                     double nsCount = std::chrono::duration<double, std::nano>(endTime - startTime).count();
                     std::cout << "Input: " << input <<" Count: "<< count << "  NeedTime: " << nsCount << " ns   " << nsCount / 1000 << " us " << nsCount / 1000000 << "ms" << std::endl;
                     std::cout << "Candidates: ";
-                    for (auto& item : candidates)
+                    for (auto& item : candidates.m_candidates)
                     {
                         std::cout << item.m_nWeight << "  " << item.m_strChinese << " ";
                     }

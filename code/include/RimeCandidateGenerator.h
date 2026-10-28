@@ -13,7 +13,7 @@ public:
     CRimeCandiateGenerator(const std::string& dictFilePath);
     CRimeCandiateGenerator();
     virtual ~CRimeCandiateGenerator();
-    virtual CandidateArray Generate(
+    virtual CandidateResult Generate(
         const std::string& input,
         std::size_t maxCandidates)override;
 	virtual bool IsDataReady() const override;

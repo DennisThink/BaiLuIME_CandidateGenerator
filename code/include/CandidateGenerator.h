@@ -10,12 +10,17 @@ public:
     CandidateElem() = default;
 };
 using CandidateArray = std::vector<CandidateElem>;
+struct CandidateResult
+{
+    std::string m_strUserInput;
+    CandidateArray m_candidates;
+};
 class CandidateGenerator
 {
 public:
     virtual ~CandidateGenerator() = default;
 	virtual bool IsDataReady() const = 0;
-    virtual CandidateArray Generate(
+    virtual CandidateResult Generate(
         const std::string& input,
         std::size_t maxCandidates) = 0;
 };

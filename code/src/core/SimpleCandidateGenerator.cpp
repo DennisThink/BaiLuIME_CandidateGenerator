@@ -1,10 +1,10 @@
 ﻿#include "SimpleCandidateGenerator.h"
 
-CandidateArray SimpleCandidateGenerator::Generate(
+CandidateResult SimpleCandidateGenerator::Generate(
     const std::string& input,
     std::size_t maxCandidates)
 {
-    CandidateArray candidates;
+    CandidateResult candidates;
 
     if (maxCandidates == 0)
     {

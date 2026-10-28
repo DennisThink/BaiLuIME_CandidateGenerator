@@ -100,11 +100,11 @@ bool CRimeCandiateGenerator::IsDataReady() const
     return m_pDictionary != nullptr;
 }
 
-CandidateArray CRimeCandiateGenerator::Generate(
+CandidateResult CRimeCandiateGenerator::Generate(
     const std::string& input,
     std::size_t maxCandidates)
 {
-    CandidateArray result;
+    CandidateResult result;
     std::size_t INPUT_LEN = input.length();
     if (m_CandidateMaps.size() > INPUT_LEN)
     {
@@ -117,8 +117,8 @@ CandidateArray CRimeCandiateGenerator::Generate(
                 CandidateElem elem;
                 elem.m_nWeight = 100;
                 elem.m_strChinese = chineseItem;
-                result.push_back(elem);
-                if (result.size() >= maxCandidates)
+                result.m_candidates.push_back(elem);
+                if (result.m_candidates.size() >= maxCandidates)
                 {
                     goto END;
                 }
@@ -127,6 +127,7 @@ CandidateArray CRimeCandiateGenerator::Generate(
     }
 
     //Distance Match
+#if 0
     if (m_CandidateMaps.size() > INPUT_LEN)
     {
         if (result.empty())
@@ -181,6 +182,7 @@ CandidateArray CRimeCandiateGenerator::Generate(
             }
         }
     }
+#endif
     END:
     return result;
 }

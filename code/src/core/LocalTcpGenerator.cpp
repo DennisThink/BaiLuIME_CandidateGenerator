@@ -28,14 +28,16 @@ bool CLocalTcpGenerator::IsDataReady() const
 	return true;
 }
 
-CandidateArray CLocalTcpGenerator::Generate(
+CandidateResult CLocalTcpGenerator::Generate(
 	const std::string& input,
 	std::size_t maxCandidates)
 {
-	CandidateArray candidates;
+	CandidateResult candidates;
 	if(g_tcpClient != nullptr)
 	{
 		std::string strClientId = "test";
+		//We use Keep alive Message for test connection state and only in test mode
+#if 0
 		{
 			KeepAliveReqMsg reqMsg(strClientId);
 			{
@@ -62,10 +64,11 @@ CandidateArray CLocalTcpGenerator::Generate(
 				delete[] pData;
 			}
 		}
+#endif
 		{
 
 			std::string strInput = input;
-			CandidateGeneratorReqMsg reqMsg(strClientId, strInput);
+			CandidateGeneratorReqMsg reqMsg(strClientId, strInput,maxCandidates);
 			{
 				TransBaseMsg_t transMsg(reqMsg.GetMsgType(), reqMsg.ToString());
 				g_tcpClient->SendData(transMsg.GetData(), transMsg.GetSize());
@@ -96,7 +99,7 @@ CandidateArray CLocalTcpGenerator::Generate(
 								CandidateElem elem;
 								elem.m_nWeight = item.m_nWeight;
 								elem.m_strChinese = item.m_strChinese;
-								candidates.push_back(elem);
+								candidates.m_candidates.push_back(elem);
 								//candidates.push_back(item.m_strChinese);
 							}
 						}

@@ -17,6 +17,6 @@ TEST_CASE("SimpleGenerate/SimpleQuanPinGenerator") {
 		CHECK(generator.IsDataReady() == true);
 		std::string strUserInput = "ni";
 		auto result = generator.Generate(strUserInput, 5);
-		CHECK(result.size() >= 5);
+		CHECK(result.m_candidates.size() >= 5);
 	}
 }

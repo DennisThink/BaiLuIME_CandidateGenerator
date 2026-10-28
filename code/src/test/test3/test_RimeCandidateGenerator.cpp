@@ -22,7 +22,7 @@ TEST_CASE("SimpleGenerate/RimeCandidateGenerator") {
 		CHECK(generator.IsDataReady() == true);
 		std::string strUserInput = "ni";
 		auto result = generator.Generate(strUserInput, 5);
-		CHECK(result.size() >= 5);
+		CHECK(result.m_candidates.size() >= 5);
 	}
 	{
 		std::string strFilePath = strFolder + "base.dict.txt";
@@ -30,6 +30,6 @@ TEST_CASE("SimpleGenerate/RimeCandidateGenerator") {
 		CHECK(generator.IsDataReady() == true);
 		std::string strUserInput = "nihao";
 		auto result = generator.Generate(strUserInput, 5);
-		CHECK(result.size() >= 2);
+		CHECK(result.m_candidates.size() >= 2);
 	}
 }
