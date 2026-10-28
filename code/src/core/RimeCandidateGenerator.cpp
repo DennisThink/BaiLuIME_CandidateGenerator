@@ -50,13 +50,19 @@ bool CRimeCandiateGenerator::ReadDataFromFile(const std::string strFileName)
                     auto valueItem = m_CandidateMaps[KEY_LEN].find(strKey);
                     if (valueItem != m_CandidateMaps[KEY_LEN].end())
                     {
-                        valueItem->second.push_back(dictItem._strChinese);
+                        CandidateValue value;
+                        value.m_nWeight = 100;
+                        value.m_strChinese = dictItem._strChinese;
+                        valueItem->second.push_back(value);
                     }
                     else
                     {
-                        std::vector<std::string> chineseValue;
-                        chineseValue.push_back(dictItem._strChinese);
-                        m_CandidateMaps[KEY_LEN].insert({ strKey,chineseValue });
+                        CandidateValue value;
+                        value.m_nWeight = 100;
+                        value.m_strChinese = dictItem._strChinese;
+                        CandidateVector vec;
+                        vec.push_back(value);
+                        m_CandidateMaps[KEY_LEN].insert({ strKey,vec });
                     }
                 }
             }
@@ -114,10 +120,7 @@ CandidateResult CRimeCandiateGenerator::Generate(
         {
             for (auto& chineseItem : item->second)
             {
-                CandidateElem elem;
-                elem.m_nWeight = 100;
-                elem.m_strChinese = chineseItem;
-                result.m_candidates.push_back(elem);
+                result.m_candidates.push_back(chineseItem);
                 if (result.m_candidates.size() >= maxCandidates)
                 {
                     goto END;

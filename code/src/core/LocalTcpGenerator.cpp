@@ -96,7 +96,7 @@ CandidateResult CLocalTcpGenerator::Generate(
 							auto candidateList = rspMsg.GetCandidates();
 							for (auto& item : candidateList)
 							{
-								CandidateElem elem;
+								CandidateValue elem;
 								elem.m_nWeight = item.m_nWeight;
 								elem.m_strChinese = item.m_strChinese;
 								candidates.m_candidates.push_back(elem);

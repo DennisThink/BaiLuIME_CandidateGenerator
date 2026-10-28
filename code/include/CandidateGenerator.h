@@ -2,18 +2,11 @@
 
 #include <string>
 #include <vector>
-struct CandidateElem
-{
-    std::string m_strChinese;
-    int m_nWeight;
-public:
-    CandidateElem() = default;
-};
-using CandidateArray = std::vector<CandidateElem>;
+#include "CommonStruct.h"
 struct CandidateResult
 {
     std::string m_strUserInput;
-    CandidateArray m_candidates;
+    CandidateVector m_candidates;
 };
 class CandidateGenerator
 {

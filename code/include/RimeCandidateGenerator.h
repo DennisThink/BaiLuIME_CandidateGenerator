@@ -4,9 +4,8 @@
 #include "IDictionaryInterface.h"
 #include <memory>
 #include <map>
-using CandidateValue = std::vector<std::string>;
 using CandidateKey = std::string;
-using CandidateMap = std::map < CandidateKey, CandidateValue>;
+using CandidateMap = std::map < CandidateKey,CandidateVector>;
 class CRimeCandiateGenerator :public CandidateGenerator
 {
 public:
